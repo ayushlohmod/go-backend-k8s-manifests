@@ -13,10 +13,10 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - api-ayush.track360.net.in
+    - api-go.track360.net.in
     secretName: go-backend-api-production-tls
   rules:
-  - host: api-ayush.track360.net.in
+  - host: api-go.track360.net.in
     http:
       paths:
       - path: /
