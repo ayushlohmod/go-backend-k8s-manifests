@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: go-backend-api-production
+  namespace: production-go-backend
+  labels:
+    app: go-backend-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: go-backend-api
+  template:
+    metadata:
+      labels:
+        app: go-backend-api
+    spec:
+      containers:
+      - name: go-backend-container
+        image: ayushlohmod/go-backend-api:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        envFrom:
+          - configMapRef:
+              name: shared-go-backend-env-vars
+        env:
+          - name: SERVICE_NAME
+            value: "go-backend-api-production"
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 256Mi
+        livenessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/v1/health
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      restartPolicy: Always
