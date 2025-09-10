@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
       - name: go-backend-container
-        image: ayushlohmod/go-backend-api:latest
+        image: ayushlohmod/go-backend-api:1.1
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
